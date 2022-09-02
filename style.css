@@ -21,4 +21,10 @@ a{
 /*==========COMMON CSS END==========*/
 /*==========HEADER PART START==========*/
 
+.author-img{
+    width: 8%;
+    border-radius: 50%;
+
+}
+
 /*==========HEADER PART END==========*/
