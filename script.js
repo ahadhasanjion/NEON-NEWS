@@ -9,12 +9,11 @@ const catagoryDisplay = async () => {
     const mainCategory = document.getElementById("main-category")
     data.forEach((categories) => {
         const { category_name,category_id} = categories;
-        const li = document.createElement('li')
-        li.classList.add('menu-items')
-        li.innerHTML = `
-        <a class="text-secondary mx-4 fs-5" href="#" onclick="loadNews('${category_id}')">${category_name}</a>
+        const div = document.createElement('div')
+        div.innerHTML = `
+        <a class="text-secondary mx-4 fs-6" href="#" onclick="loadNews('${category_id}')">${category_name}</a>
         `
-        mainCategory.appendChild(li);
+        mainCategory.appendChild(div);
     });
 }
 catagoryDisplay();
@@ -26,10 +25,13 @@ const loadNews = async (category_id) => {
     neonNews(newsdata);
 }
 
-const neonNews = async(newsdata) => {  
+const neonNews = async(newsdata) => { 
+    toggleSpiner(true); 
+
     const allNews = newsdata.length;
     const items = document.getElementById('how-many-news')
     items.innerText = allNews;
+    toggleSpiner(true);
     const newsContainer = document.getElementById('news-container');
     newsContainer.textContent = ''; 
     newsdata.forEach(nes => {
@@ -51,7 +53,7 @@ const neonNews = async(newsdata) => {
                                     <img class="author-img" src="${img}">
                                     <div class="ps-2">
                                         <p>${name ? name:'N/A'}</p>
-                                        <p>${published_date.length > 10 ? published_date.slice(0, 11): published_date}</p>
+                                        <p>${published_date}</p>
                                     </div>
                                 <p>${total_view ? total_view: 'N/A'}</P>
                                 <button onclick="newsDetails('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsModal">Primary</button>
@@ -65,10 +67,10 @@ const neonNews = async(newsdata) => {
         
         `
         newsContainer.appendChild(newsDiv);
+        toggleSpiner(false);
     })
-    toggleSpiner(false);
 }
-const toggleSpiner = isLoading => {
+const toggleSpiner = (isLoading) => {
     const loadingSection = document.getElementById('loader');
     if(isLoading){
         loadingSection.classList.remove('d-none');
@@ -90,15 +92,18 @@ const newsDataDetails = async (newsdata) =>{
     newsdata.forEach(nes => {
         const {_id, total_view, title, image_url, details, author} = nes
         const {name, img, published_date} = author
+        const modalTitle = document.getElementById('newsModalLabel');
+        modalTitle.innerText = title;
         const modalD = document.getElementById('modalDetails');
         modalD.innerHTML=`
         <div class="p-4">
-            <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center justify-content-between mt-4">
                 <p>Author: ${name ? name : 'N/A'}</p>
                 <img class="author-image" src="${img}">
             </div>
             <p>Total View: ${total_view ? total_view : 'N/A'}</p>
             <p>Publish Date and Time: ${published_date.length > 10 ? published_date.slice(0, 11): published_date}</p>
+            <p class="mt-2">${details.length > 400 ? details.slice(0, 100)+'...': details}</P>
         </div>
         `
     })

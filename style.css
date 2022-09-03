@@ -29,5 +29,10 @@ a{
     width: 15%;
     border-radius: 50%;
 }
-
 /*==========HEADER PART END==========*/
+/*==========MENU PART START==========*/
+/* #main-category{
+    display: flex;
+    flex-wrap: wrap;
+} */
+/*==========MENU PART END==========*/
