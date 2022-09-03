@@ -2,23 +2,22 @@ const loadCatagory = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
     const res = await fetch(url);
     const data = await res.json();
-    return data.data.news_category
+    return data.data.news_category;
 }
 const catagoryDisplay = async () => {
     const data = await loadCatagory();
     const mainCategory = document.getElementById("main-category")
     data.forEach((categories) => {
         const { category_name,category_id} = categories;
-        const div = document.createElement('div')
-        div.innerHTML = `
+        const li = document.createElement('li');
+        li.innerHTML = `
         <a class="text-secondary mx-4 fs-6" href="#" onclick="loadNews('${category_id}')">${category_name}</a>
         `
-        mainCategory.appendChild(div);
+        mainCategory.appendChild(li);
     });
 }
 catagoryDisplay();
 const loadNews = async (category_id) => {
-    toggleSpiner(true);
     const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${category_id}`);
     const data = await res.json();
     const newsdata = data.data;
@@ -26,14 +25,26 @@ const loadNews = async (category_id) => {
 }
 
 const neonNews = async(newsdata) => { 
-    toggleSpiner(true); 
-
+    newsdata.sort((a, b)=>{
+        return b.total_view - a.total_view;
+    })
     const allNews = newsdata.length;
     const items = document.getElementById('how-many-news')
     items.innerText = allNews;
-    toggleSpiner(true);
+
+    // const noNews = document.getElementBuId('no-news-found')
+    if(allNews === 0){
+        let noNews = document.getElementById('no-news-found') 
+        noNews.classList.remove('d-none')
+    }
+    else{
+        let noNews = document.getElementById('no-news-found') 
+        noNews.classList.add('d-none')
+    }
+
     const newsContainer = document.getElementById('news-container');
     newsContainer.textContent = ''; 
+
     newsdata.forEach(nes => {
         const {_id, total_view, title, image_url, details, author} = nes
         const {name, img, published_date} = author
@@ -67,7 +78,6 @@ const neonNews = async(newsdata) => {
         
         `
         newsContainer.appendChild(newsDiv);
-        toggleSpiner(false);
     })
 }
 const toggleSpiner = (isLoading) => {
