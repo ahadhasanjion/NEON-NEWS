@@ -30,53 +30,29 @@
                         <a class="nav-link active text-secondary fs-4" aria-current="page" href="#">News</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-secondary fs-4" href="#">Blog</a>
+                        <a class="nav-link text-secondary fs-4" href="blog.html">Blog</a>
                     </li>
                     <li><a href="#"><img src="Avatar.png"></a></li>
                 </ul>
             </div>
         </nav>
     </header>
+    <section class="container d-flex align-items-center bg-light py-4 justify-content-center">
+        <p class="fw-semibold fs-4">News Found </p>
+        <p id="how-many-news" class="fw-semibold fs-4 ps-4"></p>
+    </section>
     <main class="container">
         <section id="category">
             <ul id="main-category" class="d-flex mt-5">
-                <!-- <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li>
-                <li><a class="px-5 text-secondary" href="#">Home</a></li> -->
+
             </ul>
         </section>
         <section>
             <div id="news-container">
-                <!-- <div class="card mt-5 mb-4">
-                        <div class="row">
-                                <div class="col-md-4">
-                                    <img src="${nes.image_url}" class="img-fluid rounded-start h-100" alt="...">
-                                </div>     
-                                <div class="col-md-8">
-                                    <div class="card-body p-4">
-                                        <h5 class="card-title">${nes.title}</h5>
-                                        <p class="card-text">${nes.details.slice(0,400)}</p>
-                                        <div class="d-flex justify-content-between align-items-center mt-3">
-                                                <img class="author-img" src="${nes.author.img}">
-                                                <div class="ps-2">
-                                                    <p>${nes.author.name}</p>
-                                                    <p>${nes.author.published_date}</p>
-                                                </div>
-                                            <p>${nes.total_view}</P>
-                                            <button type="button" class="btn btn-primary">Primary</button>
-                                        </div>
-                                        
-                                    <div>
-                                </div>
-                        </div>
-                    </div> -->
 
+            </div>
+            <div id="no-news-found" class="mt-5 text-center d-none">
+                <h3 class="text-warning">No News Found....</h3>
             </div>
         </section>
         <section>
@@ -98,6 +74,13 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <section id="loader" class="d-none mt-5">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
         </section>
     </main>
 

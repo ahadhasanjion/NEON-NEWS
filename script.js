@@ -18,16 +18,20 @@ const catagoryDisplay = async () => {
     });
 }
 catagoryDisplay();
-
 const loadNews = async (category_id) => {
+    toggleSpiner(true);
     const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${category_id}`);
     const data = await res.json();
-    const newsdata = data.data
-    neonNews(newsdata)
+    const newsdata = data.data;
+    neonNews(newsdata);
 }
-const neonNews = (newsdata) => {
+
+const neonNews = async(newsdata) => {  
+    const allNews = newsdata.length;
+    const items = document.getElementById('how-many-news')
+    items.innerText = allNews;
     const newsContainer = document.getElementById('news-container');
-    newsContainer.textContent = '';
+    newsContainer.textContent = ''; 
     newsdata.forEach(nes => {
         const {_id, total_view, title, image_url, details, author} = nes
         const {name, img, published_date} = author
@@ -44,12 +48,12 @@ const neonNews = (newsdata) => {
                             <h5 class="card-title">${title.length > 60 ? title.slice(0, 60)+'...': title}</h5>
                             <p class="card-text">${details.length > 400 ? details.slice(0, 400)+'...': details}</p>
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <img class="author-img" src="${author.img}">
+                                    <img class="author-img" src="${img}">
                                     <div class="ps-2">
-                                        <p>${author.name}</p>
-                                        <p>${author.published_date}</p>
+                                        <p>${name ? name:'N/A'}</p>
+                                        <p>${published_date.length > 10 ? published_date.slice(0, 11): published_date}</p>
                                     </div>
-                                <p>${total_view ? total_view+ 'M' : 'N/A'}</P>
+                                <p>${total_view ? total_view: 'N/A'}</P>
                                 <button onclick="newsDetails('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsModal">Primary</button>
                               </div>
                             </div>
@@ -60,31 +64,42 @@ const neonNews = (newsdata) => {
         </div>
         
         `
-        newsContainer.appendChild(newsDiv)
+        newsContainer.appendChild(newsDiv);
     })
+    toggleSpiner(false);
 }
+const toggleSpiner = isLoading => {
+    const loadingSection = document.getElementById('loader');
+    if(isLoading){
+        loadingSection.classList.remove('d-none');
+    }
+    else{
+        loadingSection.classList.add('d-none')
+    }
+}
+
+//MODAL PART
 const newsDetails = async (_id) => {
     const url = `https://openapi.programming-hero.com/api/news/${_id}`;
     const res = await fetch(url);
     const data = await res.json();
-    const alldata=data.data;
-    newsDataDetails(alldata);
+    const newsdata=data.data;
+    newsDataDetails(newsdata);
 }
-const newsDataDetails = async (alldata) =>{
-    alldata.forEach(nes => {
+const newsDataDetails = async (newsdata) =>{
+    newsdata.forEach(nes => {
         const {_id, total_view, title, image_url, details, author} = nes
         const {name, img, published_date} = author
         const modalD = document.getElementById('modalDetails');
         modalD.innerHTML=`
         <div class="p-4">
             <div class="d-flex align-items-center justify-content-between">
-                <p>Author: ${name}</p>
+                <p>Author: ${name ? name : 'N/A'}</p>
                 <img class="author-image" src="${img}">
             </div>
             <p>Total View: ${total_view ? total_view : 'N/A'}</p>
-            <p>Publish Date and Time: ${author.published_date}</p>
+            <p>Publish Date and Time: ${published_date.length > 10 ? published_date.slice(0, 11): published_date}</p>
         </div>
         `
     })
 }
-
