@@ -69,7 +69,7 @@ const displayCategory = async (newsData) => {
                     </div>   
                     <div class="col-md-8">
                         <div class="card-body p-4">
-                            <h5 class="card-title">${title.length > 70? title.slice(0, 70) + "...": title}</h5>
+                            <p class="card-title">${title.length > 70? title.slice(0, 70) + "...": title}</p>
                             <p class="card-text">${details.length > 400? details.slice(0, 400) + "...": details}</p>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <img class="author-img" src="${img}">
