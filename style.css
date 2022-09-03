@@ -24,7 +24,10 @@ a{
 .author-img{
     width: 8%;
     border-radius: 50%;
-
+}
+.author-image{
+    width: 15%;
+    border-radius: 50%;
 }
 
 /*==========HEADER PART END==========*/
