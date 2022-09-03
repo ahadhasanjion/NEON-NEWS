@@ -1,9 +1,6 @@
-/* @media (max-width: 576px) {
-    #main-category{
-       
-    }
+@media (max-width: 576px) {
     .menu-bar{
         display: flex;
         flex-wrap: wrap;
     }
-} */
+}
